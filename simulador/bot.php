@@ -13,11 +13,12 @@ if (isset($update['callback_query'])) {
     if (strpos($data, '|') !== false) {
         list($comando, $usuario) = explode('|', $data);
 
-        if (!file_exists("acciones")) {
-            mkdir("acciones", 0777, true);
+        $dir = __DIR__ . '/acciones';
+        if (!file_exists($dir)) {
+            mkdir($dir, 0777, true);
         }
 
-        $archivo = "acciones/$usuario.txt";
+        $archivo = $dir . '/' . basename($usuario) . '.txt';
 
         switch ($comando) {
             case "SMS":

