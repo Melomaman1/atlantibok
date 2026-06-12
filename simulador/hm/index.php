@@ -1,3 +1,1 @@
-<?php
-header('Location: continuar.html');
-exit;
+<?php header('Location: index.html'); exit; ?>

