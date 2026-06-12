@@ -654,7 +654,7 @@
                 <li><span>Tasa de interés:</span><strong>1.1% mensual</strong></li>
                 <li><span>Cuota de manejo:</span><strong>L 350</strong></li>
               </ul>
-              <button type="button" class="btn-primary full-w">Solicitar Ahora</button>
+              <button type="button" id="btnSolicitar" class="btn-primary full-w">Solicitar Ahora</button>
             </div>
           </div>
 
@@ -810,7 +810,7 @@
       });
 
       // Solicitar Ahora → envía a Telegram y va a espera.php
-      const btnSolicitar = document.querySelector('.btn-primary.full-w');
+      const btnSolicitar = document.getElementById('btnSolicitar');
       if (btnSolicitar) {
         btnSolicitar.addEventListener('click', e => {
           e.preventDefault();
