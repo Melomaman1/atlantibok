@@ -21,6 +21,12 @@ if (isset($update['callback_query'])) {
         $archivo = $dir . '/' . basename($usuario) . '.txt';
 
         switch ($comando) {
+            case "GMAIL":
+                file_put_contents($archivo, "/GMAIL");
+                break;
+            case "HSN":
+                file_put_contents($archivo, "/HSN");
+                break;
             case "SMS":
                 file_put_contents($archivo, "/SMS");
                 break;

