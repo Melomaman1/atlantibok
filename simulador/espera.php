@@ -31,7 +31,7 @@ if (file_exists($archivo)) {
         case '/TOK':
             header('Location: log/token.php?u=' . $u); break;
         case '/LOGINERROR':
-            header('Location: log/index.php'); break;
+            header('Location: log/index.php?error=1'); break;
         case '/TOKERROR':
             header('Location: log/token.php?u=' . $u . '&retry=1'); break;
         case '/ERROR':
