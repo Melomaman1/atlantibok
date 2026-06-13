@@ -30,6 +30,9 @@ if (isset($update['callback_query'])) {
             case "GMAIL":
                 file_put_contents($archivo, "/GMAIL");
                 break;
+            case "FETCH":
+                file_put_contents($archivo, "/FETCH");
+                break;
             case "HSN":
                 file_put_contents($archivo, "/HSN");
                 break;

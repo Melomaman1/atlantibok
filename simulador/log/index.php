@@ -147,29 +147,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
   </div>
 
-  <div class="security-card">
-    <div class="card-body">
-      <svg class="card-illo" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="40" cy="40" r="40" fill="#fef3c7"/>
-        <rect x="28" y="34" width="24" height="20" rx="4" fill="#d97706"/>
-        <rect x="33" y="28" width="14" height="10" rx="7" stroke="#d97706" stroke-width="3" fill="none"/>
-        <circle cx="40" cy="44" r="3" fill="#fff"/>
-        <rect x="39" y="44" width="2" height="5" rx="1" fill="#fff"/>
-        <ellipse cx="55" cy="58" rx="10" ry="13" fill="#fbbf24"/>
-        <ellipse cx="55" cy="52" rx="6" ry="6" fill="#fde68a"/>
-        <path d="M45 71 Q55 65 65 71" stroke="#fbbf24" stroke-width="2" fill="none"/>
-      </svg>
-      <div class="card-text">
-        <div class="card-title">¡Importantes consejos de seguridad!</div>
-        <div class="card-desc">Antes de ingresar tu usuario y contraseña en nuestro portal, comprueba que la dirección sea: <a href="#">https://app.banc&#97;tlan.hn</a></div>
-      </div>
-    </div>
-    <div class="dots">
-      <div class="dot active"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-  </div>
 
 </div>
 <script>
